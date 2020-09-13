@@ -1,0 +1,26 @@
+load(
+    "@build_bazel_rules_swift//swift:swift.bzl",
+    "swift_library",
+)
+
+# Swift version
+SWIFT_VERSION = "5"
+
+# Based on Lottie.podspec
+swift_library(
+    name = "Lottie",
+    srcs = glob(
+        [
+            "lottie-swift/src/**/*.swift",
+        ],
+        exclude = glob(["lottie-swift/src/Public/MacOS/**/*"]),
+    ),
+    copts = [
+        "-swift-version",
+        SWIFT_VERSION,
+    ],
+    module_name = "Lottie",
+    visibility = [
+        "//visibility:public",
+    ],
+)

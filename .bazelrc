@@ -1,0 +1,75 @@
+# iOS
+
+build \
+    --ios_minimum_os=10.0 \
+    --apple_platform_type=ios \
+    --ios_simulator_device='iPhone 11 Pro Max' \
+    --ios_simulator_version=13.5 \
+    --apple_bitcode=none \
+    --xcode_version=11.6
+
+# Strategies
+
+build \
+    --spawn_strategy=local \
+    --strategy=ObjcCompile=local \
+    --strategy=SwiftCompile=local \
+    --genrule_strategy=local
+
+# Compilation
+
+build --compilation_mode=fastbuild
+
+# Swift
+
+build \
+    --swiftcopt=-DBAZEL \
+    --linkopt=-Xlinker --linkopt=-no_deduplicate \
+    --linkopt=-Xlinker --linkopt=-all_load \
+    --swiftcopt=-Xfrontend --swiftcopt=-enable-objc-interop \
+    --swiftcopt=-wmo \
+    --define=apple.strip_bitcode_swift_dylibs=false \
+    --define=apple.strip_bitcode_dynamic_frameworks=true \
+    --features=swift.use_global_module_cache \
+    --features=swift.enable_vfsoverlays \
+    --features=swift.opt_uses_osize \
+    --features=swift.cacheable_swiftmodules \
+    --features=swift.split_derived_files_generation
+
+build:cli --swiftcopt=-suppress-warnings
+
+# Incompatible features
+
+build \
+    --incompatible_use_python_toolchains=false \
+    --experimental_guard_against_concurrent_changes=true \
+    --collapse_duplicate_defines=true \
+    --incompatible_strict_action_env=true
+
+# Cache
+
+build \
+    --repository_cache=~/.bazel_repo_cache \
+    --disk_cache=~/.bazel_disk_cache
+
+test \
+    --cache_test_results=true
+
+# Misc.
+
+build \
+    --verbose_failures \
+    --experimental_json_trace_compression=false \
+    --jobs 12 \
+    --announce_rc \
+    --nobuild_runfile_links
+
+query --keep_going
+
+build:coverage \
+    --swiftcopt=-profile-generate \
+    --swiftcopt=-profile-coverage-mapping \
+    --linkopt=-fprofile-instr-generate \
+    --cache_test_results=false \
+    --features=-swift.split_derived_files_generation
+

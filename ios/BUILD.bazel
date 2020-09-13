@@ -1,0 +1,43 @@
+package(default_visibility = ["//visibility:public"])
+
+load(
+    "@build_bazel_rules_swift//swift:swift.bzl",
+    "swift_library",
+)
+
+load(
+    "@build_bazel_rules_apple//apple:ios.bzl",
+    "ios_application",
+)
+
+ios_application(
+    name = "iOSApplication",
+    bundle_id = "com.example.iosapplication",
+    families = [
+        "iphone",
+        "ipad",
+    ],
+    infoplists = ["Info.plist"],
+    minimum_os_version ="10.0",
+    deps = [":iOSSwiftLibrary"],
+)
+
+# Swift version
+
+SWIFT_VERSION = "5"
+
+
+swift_library(
+    name = "iOSSwiftLibrary",
+    srcs = glob([
+        "**/*.swift",
+    ]),
+    copts = [
+        "-swift-version",
+        SWIFT_VERSION,
+    ],
+    deps = [
+        "@Lottie//:Lottie",
+    ],
+    module_name = "iOSSwiftLibrary",
+)
