@@ -18,28 +18,30 @@ load(
 
 # Apple Bazel Rules Dependency
 
-RULES_APPLE_VERSION = "v3.3.0.rules_apple.3.2"
+RULES_APPLE_VERSION = "vinone-0.21.2.2"
 
-RULES_APPLE_SHA = "0b8bd9f3a4a9a49dc1f50c6e3720625f78f0204449a620a7a5bca136059f29e2"
+RULES_APPLE_SHA = "e8fccef2e28e2205308255847b98aa5e4ffb0244122eb80c2dfaa565ae1ce476"
+
+RULES_APPLE_VERSION_PREFIX = "rules_apple-vinone-0.21.2.2"
 
 http_archive(
     name = "build_bazel_rules_apple",
     sha256 = RULES_APPLE_SHA,
-    strip_prefix = "rules_apple-3.3.0.rules_apple.3.2",
+    strip_prefix = RULES_APPLE_VERSION_PREFIX,
     urls = ["https://github.com/diesel-engineer/rules_apple/archive/%s.tar.gz" % RULES_APPLE_VERSION],
 )
 
-git_repository(
+http_archive(
     name = "build_bazel_apple_support",
-    commit = "501b4afb27745c4813a88ffa28acd901408014e4",
-    remote = "https://github.com/bazelbuild/apple_support.git",
+    sha256 = "02ac04ff0a0de1e891a1fa8839cc6a5957e3c4a80856545aa35a786d15aad108",
+    urls = ["https://github.com/bazelbuild/apple_support/releases/download/0.9.1/apple_support.0.9.1.tar.gz"],
 )
 
 # Swift Bazel Rules Depenency
 
-RULES_SWIFT_VERSION = "vinone-0.13.5"
+RULES_SWIFT_VERSION = "vinone-0.18.1"
 
-RULES_SWIFT_SHA = "bff012f95292a24adb98495d2983203cfb2fc179af08d6a9affb0b84b5540c90"
+RULES_SWIFT_SHA = "a065a2aabffc6e8ddee6988d407c8a2ca46a8c61c78c96d6ff07601ee5427b26"
 
 http_archive(
     name = "build_bazel_rules_swift",
@@ -127,18 +129,31 @@ buildifier_dependencies()
 
 # Tulsi Dependency
 
-TULSI_VERSION = "v3.3.0.tulsi.3"
+TULSI_VERSION = "tulsi-4.0.0.7"
 
-TULSI_SHA = "5a3a35dba5ecb14fa64e13d25f56f6b8d10add926a5ca5b0d17034513bba5564"
+TULSI_SHA = "27b57578ad44750dfe5d2c56c2f207003ff6073051e3461e47a802ae3e25526c"
 
 http_archive(
     name = "tulsi",
     sha256 = TULSI_SHA,
-    strip_prefix = "tulsi-3.3.0.tulsi.3",
+    strip_prefix = "tulsi-tulsi-4.0.0.7",
     urls = ["https://github.com/kevinnguyenhoang91/tulsi/archive/%s.tar.gz" % TULSI_VERSION],
 )
 
 # Other dependencies
+
+BAZEL_LINE_VERSION = "vinone-v0.2"
+
+BAZEL_LINE_SHA = "a2eba939bef380dba4a19a0744541d9b0efb86a3f1efc365fac8e0d9e1b5e0bd"
+
+http_archive(
+    name = "rules_apple_line",
+    urls = ["https://github.com/diesel-engineer/bazel_rules_apple/archive/%s.tar.gz" % BAZEL_LINE_VERSION],
+    sha256 = BAZEL_LINE_SHA,
+    strip_prefix = "bazel_rules_apple-%s" % BAZEL_LINE_VERSION,
+)
+
+rules_apple_line_dependencies()
 
 load(
     "@modular_pattern_example//lib:register_libraries.bzl",
