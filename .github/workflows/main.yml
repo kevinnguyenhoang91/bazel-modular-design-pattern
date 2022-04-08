@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  test:
     # The type of runner that the job will run on
     runs-on: [ self-hosted, macOS, xcode ]
 
@@ -25,6 +25,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Bazel build
-      - name: Build @modular_pattern_example//ios:iOSApplication
-        run: ./tools/bazeliskw build @modular_pattern_example//ios:iOSApplication
+      # Bazel test
+      - name: test @modular_pattern_example//:test
+        run: ./tools/bazeliskw test @modular_pattern_example//:test

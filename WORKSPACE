@@ -153,6 +153,11 @@ http_archive(
     strip_prefix = "bazel_rules_apple-%s" % BAZEL_LINE_VERSION,
 )
 
+load(
+    "@rules_apple_line//apple:repositories.bzl",
+    "rules_apple_line_dependencies",
+)
+
 rules_apple_line_dependencies()
 
 load(

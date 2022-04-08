@@ -65,3 +65,16 @@ toolchain(
     toolchain = ":py",
     toolchain_type = "@bazel_tools//tools/python:toolchain_type",
 )
+
+# Testing
+load(
+    "@bazel_skylib//rules:build_test.bzl",
+    "build_test",
+)
+
+build_test(
+    name = "test",
+    targets = [
+        "@modular_pattern_example//ios:iOSApplication",
+    ],
+  )
