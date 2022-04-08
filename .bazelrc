@@ -41,7 +41,7 @@ build:cli --swiftcopt=-suppress-warnings
 # Incompatible features
 
 build \
-    --incompatible_use_python_toolchains=false \
+    --incompatible_use_python_toolchains=true \
     --experimental_guard_against_concurrent_changes=true \
     --collapse_duplicate_defines=true \
     --incompatible_strict_action_env=true
